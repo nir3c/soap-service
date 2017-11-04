@@ -28,8 +28,23 @@ public class UserEndpoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "updateUserRequest")
     @ResponsePayload
     public UpdateUserResponse updateUserInfo(@RequestPayload UpdateUserRequest req){
-        userService.updateUserInfo(req.getUserAuthentication(), req.getUserUpdate());
-        UpdateUserResponse res = createFailedResponse(req);
+        boolean success = userService.updateUserInfo(req.getUserAuthentication(), req.getUserUpdate());
+        UpdateUserResponse res = createUpdateUserResponse(req.getUserUpdate().getUsername(),
+                req.getUserUpdate().getPassword(), success);
+        return res;
+    }
+
+    private UpdateUserResponse createUpdateUserResponse(String newUsername, String newPassword, boolean success) {
+        UpdateUserResponse res = new UpdateUserResponse();
+        res.setSuccess(success);
+        res.setSuccessDescription(success ? "Success" : "Update Failed");
+        UserAuthentication userAuthentication = null;
+        if(success){
+            userAuthentication = new UserAuthentication();
+            userAuthentication.setUsername(newUsername);
+            userAuthentication.setPassword(newPassword);
+            res.setUserAuthentication(userAuthentication);
+        }
         return res;
     }
 
@@ -49,21 +64,4 @@ public class UserEndpoint {
         res.setUser(user.orElse(null));
         return res;
     }
-
-    private GetUserInfoResponse createFailedResponse(GetUserInfoRequest req) {
-        GetUserInfoResponse res = new GetUserInfoResponse();
-        res.setSuccess(false);
-        res.setSuccessDescription("User Authentication is invalid");
-        res.setUser(null);
-        return res;
-    }
-
-    private UpdateUserResponse createFailedResponse(@RequestPayload UpdateUserRequest req) {
-        UpdateUserResponse res = new UpdateUserResponse();
-        res.setSuccess(false);
-        res.setSuccessDescription("One of User Authentication or UserUpdate are invalid");
-        res.setUserAuthentication(req.getUserAuthentication());
-        return res;
-    }
-
 }
