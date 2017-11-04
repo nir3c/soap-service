@@ -1,0 +1,75 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://niro.io/user"
+           xmlns:tns="http://niro.io/user" elementFormDefault="qualified">
+
+    <xs:element name="updateUserRequest" type="tns:UpdateUserRequest" />
+    <xs:element name="updateUserResponse" type="tns:UpdateUserResponse" />
+    <xs:element name="getUserInfoRequest" type="tns:GetUserInfoRequest" />
+    <xs:element name="getUserInfoResponse" type="tns:GetUserInfoResponse" />
+    <xs:element name="userAuthentication" type="tns:UserAuthentication" />
+    <xs:element name="userUpdate" type="tns:UserUpdate" />
+    <xs:element name="user" type="tns:User" />
+    <xs:element name="userType" type="tns:UserType" />
+
+
+    <xs:complexType name="UpdateUserRequest">
+        <xs:sequence>
+            <xs:element name="userAuthentication" type="tns:UserAuthentication"/>
+            <xs:element name="userUpdate" type="tns:UserUpdate"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="UpdateUserResponse">
+        <xs:sequence>
+            <xs:element name="userAuthentication" type="tns:UserAuthentication"/>
+            <xs:element name="success" type="xs:boolean"/>
+            <xs:element name="successDescription" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="GetUserInfoRequest">
+        <xs:sequence>
+            <xs:element name="userAuthentication" type="tns:UserAuthentication"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="GetUserInfoResponse">
+        <xs:sequence>
+            <xs:element name="user" type="tns:User" />
+            <xs:element name="success" type="xs:boolean"/>
+            <xs:element name="successDescription" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="UserAuthentication">
+        <xs:sequence>
+            <xs:element name="username" type="xs:string"/>
+            <xs:element name="password" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="UserUpdate">
+        <xs:sequence>
+            <xs:element name="username" type="xs:string" minOccurs="0"/>
+            <xs:element name="password" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="User">
+        <xs:sequence>
+            <xs:element name="username" type="xs:string"/>
+            <xs:element name="password" type="xs:string"/>
+            <xs:element name="firstName" type="xs:string"/>
+            <xs:element name="lastName" type="xs:string"/>
+            <xs:element name="id" type="xs:int"/>
+            <xs:element name="type" type="tns:UserType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="UserType">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="id" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>
