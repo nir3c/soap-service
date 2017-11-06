@@ -1,9 +1,9 @@
 package com.service;
 
 import com.repository.IUserRepository;
-import generated.User;
-import generated.UserAuthentication;
-import generated.UserUpdate;
+import com.generated.User;
+import com.generated.UserAuthentication;
+import com.generated.UserUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
 package com.repository;
 
-import generated.User;
+import com.generated.User;
 
 import java.util.Optional;
 

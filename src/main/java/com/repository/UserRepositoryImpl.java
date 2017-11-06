@@ -1,8 +1,8 @@
 package com.repository;
 
 import com.util.Utils;
-import generated.User;
-import generated.UserType;
+import com.generated.User;
+import com.generated.UserType;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
