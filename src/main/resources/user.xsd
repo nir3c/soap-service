@@ -1,38 +1,42 @@
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://niro.io/user"
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://niro.io/user"
            xmlns:tns="http://niro.io/user" elementFormDefault="qualified">
 
-    <xs:element name="updateUserRequest" type="tns:UpdateUserRequest" />
-    <xs:element name="updateUserResponse" type="tns:UpdateUserResponse" />
-    <xs:element name="getUserInfoRequest" type="tns:GetUserInfoRequest" />
-    <xs:element name="getUserInfoResponse" type="tns:GetUserInfoResponse" />
-    <xs:element name="userAuthentication" type="tns:UserAuthentication" />
     <xs:element name="userUpdate" type="tns:UserUpdate" />
     <xs:element name="user" type="tns:User" />
     <xs:element name="userType" type="tns:UserType" />
+    <xs:element name="userAuthentication" type="tns:UserAuthentication" />
 
+    <xs:element name="updateUserRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userAuthentication" type="tns:UserAuthentication"/>
+                <xs:element name="userUpdate" type="tns:UserUpdate"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 
-    <xs:complexType name="UpdateUserRequest">
-        <xs:sequence>
-            <xs:element name="userAuthentication" type="tns:UserAuthentication"/>
-            <xs:element name="userUpdate" type="tns:UserUpdate"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="UpdateUserResponse">
+    <xs:element name="updateUserResponse">
+    <xs:complexType>
         <xs:sequence>
             <xs:element name="userAuthentication" type="tns:UserAuthentication"/>
             <xs:element name="success" type="xs:boolean"/>
             <xs:element name="successDescription" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
+    </xs:element >
 
-    <xs:complexType name="GetUserInfoRequest">
+    <xs:element name="getUserInfoRequest">
+    <xs:complexType>
         <xs:sequence>
             <xs:element name="userAuthentication" type="tns:UserAuthentication"/>
         </xs:sequence>
     </xs:complexType>
+    </xs:element>
 
-    <xs:complexType name="GetUserInfoResponse">
+    <xs:element name="getUserInfoResponse">
+    <xs:complexType>
         <xs:sequence>
             <xs:element name="user" type="tns:User" />
             <xs:element name="success" type="xs:boolean"/>
@@ -40,6 +44,7 @@
         </xs:sequence>
     </xs:complexType>
 
+    </xs:element>
     <xs:complexType name="UserAuthentication">
         <xs:sequence>
             <xs:element name="username" type="xs:string"/>
