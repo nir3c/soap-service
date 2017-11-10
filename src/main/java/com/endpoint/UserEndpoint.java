@@ -1,7 +1,9 @@
 package com.endpoint;
 
+import com.service.IUserService;
 import com.service.UserService;
 import com.generated.*;
+import com.util.UserEndPointUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -16,11 +18,11 @@ import java.util.Optional;
 @Endpoint
 public class UserEndpoint {
 
-    private final UserService userService;
+    private final IUserService userService;
     private final static String NAMESPACE_URI = "http://niro.io/user";
 
     @Autowired
-    public UserEndpoint(UserService userService) {
+    public UserEndpoint(IUserService userService) {
         this.userService = userService;
     }
 
@@ -29,39 +31,14 @@ public class UserEndpoint {
     @ResponsePayload
     public UpdateUserResponse updateUserInfo(@RequestPayload UpdateUserRequest req){
         boolean success = userService.updateUserInfo(req.getUserAuthentication(), req.getUserUpdate());
-        UpdateUserResponse res = createUpdateUserResponse(req.getUserUpdate().getUsername(),
+        return UserEndPointUtils.createUpdateUserResponse(req.getUserUpdate().getUsername(),
                 req.getUserUpdate().getPassword(), success);
-        return res;
-    }
-
-    private UpdateUserResponse createUpdateUserResponse(String newUsername, String newPassword, boolean success) {
-        UpdateUserResponse res = new UpdateUserResponse();
-        res.setSuccess(success);
-        res.setSuccessDescription(success ? "Success" : "Update Failed");
-        UserAuthentication userAuthentication = null;
-        if(success){
-            userAuthentication = new UserAuthentication();
-            userAuthentication.setUsername(newUsername);
-            userAuthentication.setPassword(newPassword);
-            res.setUserAuthentication(userAuthentication);
-        }
-        return res;
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getUserInfoRequest")
     @ResponsePayload
     public GetUserInfoResponse getUserInfo(@RequestPayload GetUserInfoRequest req){
         Optional<User> user = userService.findUser(req.getUserAuthentication());
-        GetUserInfoResponse res = createGetUserInfoResponse(user);
-        return res;
-    }
-
-    private GetUserInfoResponse createGetUserInfoResponse(Optional<User> user) {
-        GetUserInfoResponse res = new GetUserInfoResponse();
-        res.setSuccess(user.isPresent());
-        String description = user.isPresent() ? "Success" : "User not found";
-        res.setSuccessDescription(description);
-        res.setUser(user.orElse(null));
-        return res;
+        return UserEndPointUtils.createGetUserInfoResponse(user);
     }
 }

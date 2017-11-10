@@ -13,7 +13,7 @@ import java.util.Optional;
  * Created by Nir on 11/4/2017.
  */
 @Service
-public class UserService {
+public class UserService implements IUserService{
 
     private final IUserRepository userRepository;
 
@@ -22,10 +22,12 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    @Override
     public Optional<User> findUser(UserAuthentication userAuthentication) {
         return userRepository.findUser(userAuthentication.getUsername(), userAuthentication.getPassword());
     }
 
+    @Override
     public boolean updateUserInfo(UserAuthentication userAuthentication, UserUpdate updates) {
         return userRepository.updateUserInfo(userAuthentication.getUsername(), userAuthentication.getPassword(),
                 updates.getUsername(), updates.getPassword());
