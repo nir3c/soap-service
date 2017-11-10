@@ -59,16 +59,18 @@ public class UserRepositoryImpl implements IUserRepository {
     }
 
     private boolean updateUserInfo(Optional<User> changeUser, String newUsername, String newPassword) {
-        if(findUser(newUsername).isPresent() ||
+        if(!changeUser.isPresent() ||
                 !isNewParametersValid(newUsername, newPassword) ||
-                !changeUser.isPresent())
+                (!changeUser.get().getUsername().equals(newUsername) &&
+                        findUser(newUsername).isPresent())
+                )
             return false;
         User user = changeUser.get();
         String oldUsername = user.getUsername();
         if(!Utils.isEmpty(newUsername, true))
             user.setUsername(newUsername);
         if(!Utils.isEmpty(newPassword, true))
-            user.setUsername(newPassword);
+            user.setPassword(newPassword);
         return addUser(oldUsername, user) != null;
     }
 
