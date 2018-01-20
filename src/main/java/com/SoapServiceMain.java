@@ -5,6 +5,7 @@ import io.prometheus.client.spring.boot.EnableSpringBootMetricsCollector;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 /**
  * Created by Nir.
@@ -12,7 +13,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @SpringBootApplication
 @EnablePrometheusEndpoint
 @EnableSpringBootMetricsCollector
-@EnableConfigurationProperties
+@EnableWebSecurity
 public class SoapServiceMain {
 
     public static void main(String[] args) {

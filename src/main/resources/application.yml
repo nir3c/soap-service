@@ -5,8 +5,6 @@ logging:
   level:
     org.springframework.security: DEBUG
 
-soap:
-  security:
-    username: nir
-    password: nir
-    role: ACTUATOR
+security:
+  user.name: nir
+  user.password: nir
