@@ -7,6 +7,6 @@ logging:
 
 soap:
   security:
-    username: niro
-    password: niro
+    username: nir
+    password: nir
     role: ACTUATOR
