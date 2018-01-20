@@ -7,4 +7,10 @@ logging:
 
 management:
   security:
-    enabled: false
+    roles: NIR
+
+soap:
+  security:
+    username: nir
+    password: nir
+    role: NIR
