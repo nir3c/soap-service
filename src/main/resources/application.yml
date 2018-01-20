@@ -5,12 +5,8 @@ logging:
   level:
     org.springframework.security: DEBUG
 
-management:
-  security:
-    roles: NIR
-
 soap:
   security:
-    username: nir
-    password: nir
-    role: NIR
+    username: niro
+    password: niro
+    role: ACTUATOR
